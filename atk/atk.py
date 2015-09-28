@@ -86,6 +86,10 @@ class atk(cmd.Cmd):
         multissh -script [script_name]
         Run script with sudo:
         multissh -script sudo [script_name]
+        Copy file from server(s):
+        multissh -copy [remotepath] [localpath]
+        Copy file to server(s):
+        multissh -put [localpath] [remotepath]
         '''
         self.r = remote()
         self.r.run_cmd(_cmd_)

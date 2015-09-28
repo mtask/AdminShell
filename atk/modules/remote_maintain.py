@@ -19,8 +19,14 @@ class remote(object):
             return (self.hosts, self.users)
         except:
             "[!] Check your hosts.txt file for misconfiguration"
-        
-            
+
+    def run_script(self,scmd,sudo_=False):
+        put(scmd, scmd, mode=0755)
+        if sudo_:
+            sudo("./"+scmd)
+        else:
+            run("./"+scmd)
+                  
     def run_cmd(self, cmd_raw):
         self.failed = []
         self.cmd = cmd_raw.split()
@@ -33,18 +39,28 @@ class remote(object):
                             self.cmd.remove('sudo')
                             if "-script" in self.cmd:
                                 self.cmd.remove("-script")
-                                self.script = ''.join(self.cmd)
-                                put(self.script, self.script, mode=0755)
-                                sudo("./"+self.script)
-
+                                self.cmd = ''.join(self.cmd)
+                                self.run_script(self.cmd, sudo_=True)                                
                             else:
                                 sudo(' '.join(self.cmd))
                         else:
                             if "-script" in self.cmd:
                                 self.cmd.remove("-script")
-                                self.script = ''.join(self.cmd)
-                                put(self.script, self.script, mode=0755)
-                                run("./"+self.script)                 
+                                self.cmd = ''.join(self.cmd)
+                                self.run_script(self.cmd)
+                                
+                            elif "-copy" in self.cmd:
+                                self.cmd.remove("-copy")
+                                self.r_path = self.cmd[0]
+                                self.l_path = self.cmd[1]
+                                get(self.r_path, self.l_path)
+                           
+                            elif "-put" in self.cmd:
+                                self.cmd.remove("-put")
+                                self.l_path = self.cmd[0]
+                                self.r_path = self.cmd[1]
+                                put(self.l_path, self.r_path)
+
                             else:
                                 run(' '.join(self.cmd))
                        
