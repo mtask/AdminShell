@@ -47,6 +47,8 @@ Usage: &gt; multissh [command]
 
 Make "hosts.txt" file in atk's directory with the following form with one host+user per line:"[user@host]=[user]". Without quotes.
 
+Multissh can ofcourse be used also to run remote commands in one server only.
+
 - Other commands
 
 help - Print help page
