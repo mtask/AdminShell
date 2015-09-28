@@ -1,4 +1,4 @@
-Atk is toolkit for Linux sysadmins or home users with multiple Linix amchines. It has it's own shell-like enviroment which prompt supports tab autocompletion and command history with up arrow(only current session).
+Atk is toolkit for Linux sysadmins or for home users with Linux machines. It has it's own shell-like enviroment which prompt supports tab autocompletion and command history with up arrow(only current session).
 
 ###Depencies
 
