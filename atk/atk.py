@@ -81,7 +81,11 @@ class atk(cmd.Cmd):
         
     def do_multissh(self, _cmd_):
         '''
-        rssh [command]
+        multissh [command]
+        Run local script on remote machine:
+        multissh -script [script_name]
+        Run script with sudo:
+        multissh -script sudo [script_name]
         '''
         self.r = remote()
         self.r.run_cmd(_cmd_)
@@ -108,7 +112,23 @@ class atk(cmd.Cmd):
         Clear screen.
         """
         os.system('clear')
-                    
+        
+    def do_ls(self,*args):
+       '''
+       ls
+       List files and directories.
+       '''
+       len(''.join(args))
+       if len(''.join(args)) == 0:
+           self.pwd = '.'
+       else:
+           self.pwd = ''.join(args)
+           
+       self.files = os.listdir(self.pwd)
+       for f in self.files:
+           print f,
+       print "\n"
+           
     def do_exit(self,*args):
         """exit"""
         sys.exit(0)

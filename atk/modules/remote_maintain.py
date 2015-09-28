@@ -11,6 +11,8 @@ class remote(object):
         try:
             with open('hosts.txt','r') as h:
                 for self.l in h:
+                    if self.l.startswith("#"):
+                        continue
                     self.params = self.l.split('=', 1)
                     self.hosts.append(self.params[0])
                     self.users.append(self.params[1])
@@ -29,18 +31,31 @@ class remote(object):
                     try:
                         if "sudo" in self.cmd:
                             self.cmd.remove('sudo')
-                            sudo(' '.join(self.cmd))
+                            if "-script" in self.cmd:
+                                self.cmd.remove("-script")
+                                self.script = ''.join(self.cmd)
+                                put(self.script, self.script, mode=0755)
+                                sudo("./"+self.script)
+
+                            else:
+                                sudo(' '.join(self.cmd))
                         else:
-                            run(' '.join(self.cmd))
+                            if "-script" in self.cmd:
+                                self.cmd.remove("-script")
+                                self.script = ''.join(self.cmd)
+                                put(self.script, self.script, mode=0755)
+                                run("./"+self.script)                 
+                            else:
+                                run(' '.join(self.cmd))
                        
                     except Exception as e:
                         self.failed.append(self.s)
-                        print "Execution failed on: "+self.t
+                        print "Execution failed on: "+self.s
                         print "Error:"+str(e)
 
                         
             else:
-                #Change path to match your private key
+                #Fix this, can't assume path to private_key
                 with settings(host_string=self.s, user=self.u, key_filename='~/.ssh/id_rsa', warn_only=True):
                     try:
                         if "sudo" in self.cmd:
@@ -50,7 +65,7 @@ class remote(object):
                            run(' '.join(self.cmd))
                        
                     except Exception as e:
-                        self.failed.append(self.t)
+                        self.failed.append(self.s)
                         print "Execution failed on: "+self.s
                         print "Error:"+str(e)
 

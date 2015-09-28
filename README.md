@@ -9,6 +9,20 @@ $ pip install fabric
 
 ##Atk's Commands
 
+- multissh
+
+Remotely run commands on multiple ssh servers.
+
+Usage: &gt; multissh [command]
+
+Run local script on hosts: &gt; multissh -script [script_name]
+
+Run local script with sudo: &gt; multissh -script sudo [script_name]
+
+Make "hosts.txt" file in atk's directory with the following form with one host+user per line:"[user@host]=[user]" (without quotes).
+
+Multissh can ofcourse be used also to run remote commands in one server only. Hosts can be commented out with "#" in hosts.txt, so certain hosts can be skipped without removing them from file.
+
 - netmon
 
 Usage: &gt; netmon [time]  [interval]
@@ -39,18 +53,13 @@ Quickly share files under given path. WARNING: With quick_share no authenticatio
 
 Usage: &gt; quick_share [path] [port]
 
-- multissh
-
-Remotely run commands on multiple ssh servers.
-
-Usage: &gt; multissh [command]
-
-Make "hosts.txt" file in atk's directory with the following form with one host+user per line:"[user@host]=[user]". Without quotes.
-
-Multissh can ofcourse be used also to run remote commands in one server only.
 
 - Other commands
 
-help - Print help page
+help - Print help page. Add command name after help to get more info
 
 clear - Clear screen
+
+ls - List files
+
+exit - Exit
