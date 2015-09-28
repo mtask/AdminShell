@@ -8,13 +8,15 @@ class remote(object):
     def get_hosts(self):
         self.hosts = []
         self.users = []
-        with open('hosts.txt','r') as h:
-            for self.l in h:
-                self.params = self.l.split('=', 1)
-                self.hosts.append(self.params[0])
-                self.users.append(self.params[1])
-        
-        return (self.hosts, self.users)
+        try:
+            with open('hosts.txt','r') as h:
+                for self.l in h:
+                    self.params = self.l.split('=', 1)
+                    self.hosts.append(self.params[0])
+                    self.users.append(self.params[1])
+            return (self.hosts, self.users)
+        except:
+            "[!] Check your hosts.txt file for misconfiguration"
         
             
     def run_cmd(self, cmd_raw):
@@ -23,7 +25,7 @@ class remote(object):
         self.servers,self.users = self.get_hosts()
         for self.s, self.u in zip(self.servers, self.users):
             if not os.path.isfile('~/.ssh/id_rsa'):
-                with settings(host_string=self.s, user=self.u):
+                with settings(host_string=self.s, user=self.u, warn_only=True):
                     try:
                         if "sudo" in self.cmd:
                             self.cmd.remove('sudo')
@@ -35,10 +37,11 @@ class remote(object):
                         self.failed.append(self.s)
                         print "Execution failed on: "+self.t
                         print "Error:"+str(e)
+
                         
             else:
                 #Change path to match your private key
-                with settings(host_string=self.s, user=self.u, key_filename='~/.ssh/id_rsa'):
+                with settings(host_string=self.s, user=self.u, key_filename='~/.ssh/id_rsa', warn_only=True):
                     try:
                         if "sudo" in self.cmd:
                             self.cmd.remove('sudo')
@@ -51,9 +54,7 @@ class remote(object):
                         print "Execution failed on: "+self.s
                         print "Error:"+str(e)
 
-        if len(self.failed) == 0:
-            print "Operstion successfull on all hosts"
-        else:
+        if len(self.failed) > 0:
             print "[!] Execution failed on:"
             for f in self.failed:
                 print f
