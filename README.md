@@ -15,13 +15,13 @@ Remotely run commands on multiple ssh servers.
 
 Basic usage: &gt; multissh [command]
 
-Run local script on hosts: &gt; multissh -script [script_name]
+Run local script on host(s): &gt; multissh -script [script_name]
 
 Run local script with sudo: &gt; multissh -script sudo [script_name]
 
-Copy file from server(s): &gt;multissh -copy [remotepath] [localpath]
+Copy file from host(s): &gt;multissh -copy [remotepath] [localpath]
 
-Copy file to server(s):&gt;multissh -put [localpath] [remotepath]
+Copy file to host(s):&gt;multissh -put [localpath] [remotepath]
 
 Make "hosts.txt" file in atk's directory with the following form with one host+user per line:"[user@host]=[user]" (without quotes).
 Multissh can ofcourse be used also to run remote commands in one server only. Hosts can be commented out with "#" in hosts.txt, so certain hosts can be skipped without removing them from file.When running local scripts the script is copied to host and then executed. 
