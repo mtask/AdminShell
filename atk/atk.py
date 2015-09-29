@@ -118,21 +118,31 @@ class atk(cmd.Cmd):
         os.system('clear')
         
     def do_ls(self,*args):
-       '''
-       ls
-       List files and directories.
-       '''
-       len(''.join(args))
-       if len(''.join(args)) == 0:
-           self.pwd = '.'
-       else:
-           self.pwd = ''.join(args)
+        '''
+        ls
+        List files and directories.
+        '''
+        len(''.join(args))
+        if len(''.join(args)) == 0:
+            self.pwd = '.'
+        else:
+            self.pwd = ''.join(args)
            
-       self.files = os.listdir(self.pwd)
-       for f in self.files:
-           print f,
-       print "\n"
-           
+        self.files = os.listdir(self.pwd)
+        for f in self.files:
+            print f,
+        print ""
+
+    def do_cd(self,path):
+        try:
+            os.chdir(path)
+        except:
+            if path == "":
+                self.home_dir = os.path.expanduser("~/")
+                os.chdir(self.home_dir)
+            else:
+                print "*** No such file or directory: "+path           
+
     def do_exit(self,*args):
         """exit"""
         sys.exit(0)
