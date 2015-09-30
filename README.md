@@ -23,8 +23,8 @@ Copy file from host(s): &gt;multissh -copy [remotepath] [localpath]
 
 Copy file to host(s):&gt;multissh -put [localpath] [remotepath]
 
-Make "hosts.txt" file in atk's directory with the following form with one host+user per line:"[user@host]=[user]" (without quotes).
-Multissh can ofcourse be used also to run remote commands in one server only. Hosts can be commented out with "#" in hosts.txt, so certain hosts can be skipped without removing them from file.When running local scripts the script is copied to host and then executed. 
+Modify multissh.conf file in atk's directory with the following form with one host+user per line:"[user@host]=[user]" (without quotes).
+Multissh can ofcourse be used also to run remote commands in one server only. Hosts can be commented out with "#", so certain hosts can be skipped without removing them. When running local scripts the script is copied to host and then executed. 
 
 ###- netmon
 
