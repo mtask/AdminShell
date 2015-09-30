@@ -126,14 +126,17 @@ class atk(cmd.Cmd):
         if len(''.join(args)) == 0:
             self.pwd = '.'
         else:
-            self.pwd = ''.join(args)
-           
-        self.files = os.listdir(self.pwd)
-        for f in self.files:
-            print f,
-        print ""
+            self.pwd = ''.join(args)       
+        try:   
+            self.files = os.listdir(self.pwd)
+            for f in self.files:
+               print f,
+            print
+        except Exception as e:
+            print e
 
     def do_cd(self,path):
+        '''Change working directory'''
         try:
             os.chdir(path)
         except:
@@ -143,18 +146,23 @@ class atk(cmd.Cmd):
             else:
                 print "*** No such file or directory: "+path           
 
+    def do_pwd(self, *args):
+       '''Shpw current working directory'''
+       print os.getcwd()
+        
     def do_exit(self,*args):
-        """exit"""
+        '''exit'''
         sys.exit(0)
         
     def do_EOF(self,*args):
+        print
         sys.exit()
     
     def cmdloop(self):
         try:
             cmd.Cmd.cmdloop(self)
         except KeyboardInterrupt:
-            print "\n"
+            print 
             self.cmdloop()
         except TypeError as e:
             print "*** Invalid syntax"

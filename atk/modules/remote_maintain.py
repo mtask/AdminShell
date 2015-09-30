@@ -5,11 +5,16 @@ import sys, os
 
 class remote(object):
 
+
     def get_hosts(self):
+        '''
+        Get hosts info from hosts.txt file which needs to be
+        configured by user.
+         '''
         self.hosts = []
         self.users = []
         try:
-            with open('hosts.txt','r') as h:
+            with open('multissh.conf','r') as h:
                 for self.l in h:
                     if self.l.startswith("#"):
                         continue
@@ -18,9 +23,10 @@ class remote(object):
                     self.users.append(self.params[1])
             return (self.hosts, self.users)
         except:
-            "[!] Check your hosts.txt file for misconfiguration"
+            print "[!] Check your multissh config file for misconfiguration"
 
     def run_script(self,scmd,sudo_=False):
+        '''Copy local script to host and execute it'''
         put(scmd, scmd, mode=0755)
         if sudo_:
             sudo("./"+scmd)
@@ -28,6 +34,9 @@ class remote(object):
             run("./"+scmd)
                   
     def run_cmd(self, cmd_raw):
+        '''
+        run commands and copy files from/to host(s).
+        '''
         self.failed = []
         self.cmd = cmd_raw.split()
         self.servers,self.users = self.get_hosts()
