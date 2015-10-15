@@ -85,4 +85,6 @@ clear - Clear screen
 
 ls - List files
 
+pwd - Get cwd path
+
 exit - Exit
