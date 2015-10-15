@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 '''
-Program: key_parser.py
+Author: mtask@github.com
 Description: Key_parser parses keys and options from authorized_keys file to SQLite database.
 It assumes that file can be found under path "~/.ssh/". Custom path can be set with "--path [PATH]" argument.
 
