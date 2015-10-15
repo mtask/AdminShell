@@ -6,6 +6,9 @@ $ pip install IPy
 
 $ pip install fabric
 
+## Run atk's "shell"
+
+&gt; python atk.py
 
 ##Atk's Commands
 
