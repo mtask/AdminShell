@@ -24,7 +24,23 @@ Copy file from host(s): &gt;multissh -copy [remotepath] [localpath]
 Copy file to host(s):&gt;multissh -put [localpath] [remotepath]
 
 Modify multissh.conf file in atk's directory with the following form with one host+user per line:"[user@host]=[user]" (without quotes).
-Multissh can ofcourse be used also to run remote commands in one server only. Hosts can be commented out with "#", so certain hosts can be skipped without removing them. When running local scripts the script is copied to host and then executed. 
+Multissh can ofcourse be used also to run remote commands in one server only. Hosts can be commented out with "#", so certain hosts can be skipped without removing them. When running local scripts the script is copied to host and then executed.
+
+###- keyparser
+
+Usage: &gt; keyparser --path [authorized_keys_file_path]
+
+Parse keys and options from authorized_keys file to SQLite database.
+
+Default path to authorized_keys is set to "~/.ssh/". Custom path can be set with "--path [PATH]" argument.
+
+Structure of auth_keys.db:
+
++----+---------------+--------------+
+| id |      key      | option names |
++----+---------------+--------------+
+|  1 | ssh-rsa AA... | options      |
++----+---------------+--------------+
 
 ###- netmon
 
