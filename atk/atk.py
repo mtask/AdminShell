@@ -2,6 +2,7 @@
 import os, threading, sys, cmd, getpass
 from modules.tools import *
 from modules.remote_maintain import *
+from modules.key_parser import *
 
 """
 Copyright mtask@github.com
@@ -13,7 +14,7 @@ class atk(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "atk> "
-                        
+
     def do_netmon(self, time_ival):
         """
         netmon [monitoring_time(minutes)] [interval(minutes)]
@@ -31,7 +32,7 @@ class atk(cmd.Cmd):
             print "[!] Monitoring internet connection in Background"
         else:
             print "[!] Monitoring Failed to start!"
-    
+
     def do_harvest(self, args):
         """
         harvest [input_file] -s
@@ -48,7 +49,7 @@ class atk(cmd.Cmd):
                 self.file_ = self.args[1]
         else:
             self.file_ = self.args[0]
-        self.ips, self.macs = self.imh.harvest(self.file_)     
+        self.ips, self.macs = self.imh.harvest(self.file_)
         print "IPs found("+str(len(self.ips))+"):"
         for ip in self.ips:
             print ip
@@ -65,20 +66,20 @@ class atk(cmd.Cmd):
             self.h.write("\nMAC-addresses found("+str(len(self.macs))+"):")
             for mac in self.macs:
                 self.h.write(mac)
-              
+
     def do_lookup(self, target):
         """
         lookup [host]
         Dns lookup
         """
         self.t = target.split()
-        if len(self.t) == 1:   
+        if len(self.t) == 1:
             self.lu = lookup()
         else:
             print "*** Check arguments"
         self.res = self.lu.get_host(target)
         print self.res
-        
+
     def do_multissh(self, _cmd_):
         '''
         multissh [command]
@@ -93,13 +94,41 @@ class atk(cmd.Cmd):
         '''
         self.r = remote()
         self.r.run_cmd(_cmd_)
-                                     
+
+    def do_keyparser(self, path):
+        '''
+        keyparser
+        keyparser --path [PATH]
+        Parse keys and keys options from authorized_keys files to SQLite database
+        '''
+        self.p_arg = path.split()
+        self.kp = key_parser()
+        self.dbh = db_handler()
+        if len(self.p_arg) == 2 and self.p_arg[0] == "--path":
+            self.path = self.p_arg[1]
+            self.keys = self.kp.parse(path=self.path)
+            if self.keys:
+                self.dbh.create_db()
+                self.dbh.insert_keys(self.keys)
+            else:
+                print "*** No keys found in authorizes_keys file"
+        elif len(self.p_arg) == 0:
+            self.keys = self.kp.parse()
+            if self.keys:
+                self.dbh.create_db()
+                self.dbh.insert_keys(self.keys)
+            else:
+                print "*** No keys found in authorizes_keys file"
+        else:
+            print "*** Invalid arguments: "+' '.join(self.p_arg)
+
+
     def do_quick_share(self, path_port):
         """
         quick_share [path] [port]
         Quick file share under given path.
         WARNING: No authentication required to access files.
-        """  
+        """
         self.args = path_port.split()
         if len(self.args) == 2:
             self.port = self.args[1]
@@ -109,14 +138,14 @@ class atk(cmd.Cmd):
             self.fs.simple_share(self.path, self.port)
         else:
             print "*** Check arguments"
-        
+
     def do_clear(self,*args):
         """
         clear
         Clear screen.
         """
         os.system('clear')
-        
+
     def do_ls(self,*args):
         '''
         ls
@@ -126,8 +155,8 @@ class atk(cmd.Cmd):
         if len(''.join(args)) == 0:
             self.pwd = '.'
         else:
-            self.pwd = ''.join(args)       
-        try:   
+            self.pwd = ''.join(args)
+        try:
             self.files = os.listdir(self.pwd)
             for f in self.files:
                print f,
@@ -144,25 +173,25 @@ class atk(cmd.Cmd):
                 self.home_dir = os.path.expanduser("~/")
                 os.chdir(self.home_dir)
             else:
-                print "*** No such file or directory: "+path           
+                print "*** No such file or directory: "+path
 
     def do_pwd(self, *args):
        '''Shpw current working directory'''
        print os.getcwd()
-        
+
     def do_exit(self,*args):
         '''exit'''
         sys.exit(0)
-        
+
     def do_EOF(self,*args):
         print
         sys.exit()
-    
+
     def cmdloop(self):
         try:
             cmd.Cmd.cmdloop(self)
         except KeyboardInterrupt:
-            print 
+            print
             self.cmdloop()
         except TypeError as e:
             print "*** Invalid syntax"
@@ -170,7 +199,6 @@ class atk(cmd.Cmd):
         except IndexError as e:
             print "*** Check arguments"
             self.cmdloop()
-            
+
 if __name__=="__main__":
     atk().cmdloop()
-    
