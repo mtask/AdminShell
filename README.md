@@ -37,9 +37,13 @@ Default path to authorized_keys is set to "~/.ssh/". Custom path can be set with
 Structure of auth_keys.db:
 
 +----+---------------+--------------+
+
 | id |      key      | option names |
+
 +----+---------------+--------------+
+
 |  1 | ssh-rsa AA... | options      |
+
 +----+---------------+--------------+
 
 ###- netmon
