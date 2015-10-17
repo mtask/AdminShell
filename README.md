@@ -6,6 +6,8 @@ $ pip install IPy
 
 $ pip install fabric
 
+$ pip install netifaces
+
 ## Start ash session
 
 &gt; python ash.py
@@ -78,6 +80,20 @@ Usage: &gt; lookup [address/domain]
 Quickly share files under given path. WARNING: With quick_share no authentication is needed to access shared files.
 
 Usage: &gt; quick_share [path] [port]
+
+###ipconf
+
+Usage: &gt; ipconf
+
+Get list of network interfaces with ip addresses.
+
+Prints Interface+ip-address+mac-address.
+
+###sweep
+
+Usage: &gt; sweep
+
+Fast network ping sweep 
 
 
 ###Other commands

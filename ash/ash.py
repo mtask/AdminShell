@@ -1,12 +1,9 @@
 #!/usr/bin/python
 import os, threading, sys, cmd, getpass
-#from bin.tools import *
-#from bin.remote_maintain import *
-#from bin.key_parser import *
 from bin import *
 
 """
-Copyright mtask@github.com
+Author: mtask@github.com
 See LICENSE.md
 """
 
@@ -77,6 +74,16 @@ class aShell(cmd.Cmd):
         self.i_args = iface.split()
         if len(self.i_args) == 0:
             self.ipc.get_ifaceinfo()
+            
+    def do_sweep(self,args):
+        '''
+        Quick ping sweep
+        '''
+        self.s = sweeper() 
+        if len(args.split()) == 0:
+            self.s.sweep()
+        else:
+            print "*** sweep doesn't take any arguments"
              
     
     def do_lookup(self, target):
@@ -177,7 +184,10 @@ class aShell(cmd.Cmd):
             print e
 
     def do_cd(self,path):
-        '''Change working directory'''
+        '''
+        cd [PATH]
+        Change working directory
+        '''
         try:
             os.chdir(path)
         except:
@@ -188,11 +198,17 @@ class aShell(cmd.Cmd):
                 print "*** No such file or directory: "+path
 
     def do_pwd(self, *args):
-       '''Shpw current working directory'''
+       '''
+       pwd
+       Show current working directory
+       '''
        print os.getcwd()
 
     def do_exit(self,*args):
-        '''exit ash'''
+        '''
+        exit
+        Exit ash shell
+        '''
         sys.exit(0)
 
     def do_EOF(self,*args):
