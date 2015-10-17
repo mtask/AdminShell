@@ -1,8 +1,9 @@
 #!/usr/bin/python
 import os, threading, sys, cmd, getpass
-from bin.tools import *
-from bin.remote_maintain import *
-from bin.key_parser import *
+#from bin.tools import *
+#from bin.remote_maintain import *
+#from bin.key_parser import *
+from bin import *
 
 """
 Copyright mtask@github.com
@@ -66,7 +67,18 @@ class aShell(cmd.Cmd):
             self.h.write("\nMAC-addresses found("+str(len(self.macs))+"):")
             for mac in self.macs:
                 self.h.write(mac)
-
+                
+    def do_ipconf(self, iface):
+        '''
+        Prints network interfaces info in simple and clean form
+        Printed info includes Interface, ip-address and mac-address
+        '''
+        self.ipc = ipconf() 
+        self.i_args = iface.split()
+        if len(self.i_args) == 0:
+            self.ipc.get_ifaceinfo()
+             
+    
     def do_lookup(self, target):
         """
         lookup [host]
@@ -180,7 +192,7 @@ class aShell(cmd.Cmd):
        print os.getcwd()
 
     def do_exit(self,*args):
-        '''exit'''
+        '''exit ash'''
         sys.exit(0)
 
     def do_EOF(self,*args):

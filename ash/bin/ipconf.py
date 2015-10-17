@@ -1,6 +1,6 @@
 import netifaces, os
 
-class ipyconfig(object):
+class ipconf(object):
 
     """
     Prints network interfaces info in simple and clean form
@@ -11,7 +11,7 @@ class ipyconfig(object):
         self.iface_list = netifaces.interfaces()
         return self.iface_list
         
-    def get_ipinfo(self, iface_=None):
+    def get_ifaceinfo(self, iface_=None):
         self.info_list = []
         if not iface_:
             self.ifaces = self.get_ifaces()
@@ -36,6 +36,6 @@ class ipyconfig(object):
                 
 if __name__ == '__main__':
     os.system('clear')
-    ipyconfig().get_ipinfo()  
+    ipconf().get_ifacinfo()  
             
         

@@ -68,7 +68,7 @@ file - Path to file where to harvest addresses
 
 With harvest command you can find IP and MAC addresses from given file. It prints findings to screen but you can also save results to file. Saved files are atm. stored in ash's directory.
 
-###- lookup
+###lookup
 Simple dns lookup.
 
 Usage: &gt; lookup [address/domain]
