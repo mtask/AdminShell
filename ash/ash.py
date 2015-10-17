@@ -1,19 +1,19 @@
 #!/usr/bin/python
 import os, threading, sys, cmd, getpass
-from modules.tools import *
-from modules.remote_maintain import *
-from modules.key_parser import *
+from bin.tools import *
+from bin.remote_maintain import *
+from bin.key_parser import *
 
 """
 Copyright mtask@github.com
 See LICENSE.md
 """
 
-class atk(cmd.Cmd):
+class aShell(cmd.Cmd):
 
     def __init__(self):
         cmd.Cmd.__init__(self)
-        self.prompt = "atk> "
+        self.prompt = "as> "
 
     def do_netmon(self, time_ival):
         """
@@ -201,4 +201,4 @@ class atk(cmd.Cmd):
             self.cmdloop()
 
 if __name__=="__main__":
-    atk().cmdloop()
+    aShell().cmdloop()
