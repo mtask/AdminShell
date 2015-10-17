@@ -66,11 +66,13 @@ With netmon command you can start internet connection status monitoring in backg
 Usage: &gt; harvest  [file] -s
 
 file - Path to file where to harvest addresses
--s - Save finds to file(optional)
 
-With harvest command you can find IP and MAC addresses from given file. It prints findings to screen but you can also save results to file. Saved files are atm. stored in ash's directory.
+-s  Save finds to file(optional)
+
+With harvest command you can find IP and MAC addresses from given file. It prints findings to screen but you can also save results to file. Saved files are stored in ash's directory.
 
 ###lookup
+
 Simple dns lookup.
 
 Usage: &gt; lookup [address/domain]
