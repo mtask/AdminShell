@@ -10,9 +10,9 @@ $ pip install fabric
 
 &gt; python ash.py
 
-##Atk's Commands
+##Available commands
 
-###- multissh
+###multissh
 
 Remotely run commands on multiple ssh servers.
 
@@ -29,7 +29,7 @@ Copy file to host(s):&gt;multissh -put [localpath] [remotepath]
 Modify multissh.conf file in ash's directory with the following form with one host+user per line:"[user@host]=[user]" (without quotes).
 Multissh can ofcourse be used also to run remote commands in one server only. Hosts can be commented out with "#", so certain hosts can be skipped without removing them. When running local scripts the script is copied to host and then executed.
 
-###- keyparser
+###keyparser
 
 Usage: &gt; keyparser --path [authorized_keys_file_path]
 
@@ -49,7 +49,7 @@ Structure of auth_keys.db:
 
 +----+---------------+--------------+
 
-###- netmon
+###netmon
 
 Usage: &gt; netmon [time]  [interval]
 
@@ -59,7 +59,7 @@ interval - Connection status checking interval.
 
 With netmon command you can start internet connection status monitoring in background. Monitoring lasts for given time and internet connection is checked for given interval. It logs connection's down times and if connection has been restored. Monitorin and interval time is given in minutes. Monitoring will be finished even if user exits from ash's shell.
 
-###- harvest
+###harvest
 
 Usage: &gt; harvest  [file] -s
 
@@ -73,14 +73,14 @@ Simple dns lookup.
 
 Usage: &gt; lookup [address/domain]
 
-###- quick_share
+###quick_share
 
 Quickly share files under given path. WARNING: With quick_share no authentication is needed to access shared files.
 
 Usage: &gt; quick_share [path] [port]
 
 
-###- Other commands
+###Other commands
 
 help - Print help page. Add command name after help to get more info
 
