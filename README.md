@@ -1,4 +1,4 @@
-AdminShell(ash) is shell-like enviroment for aspiring Linux sysadmins. Ash supports tab autocompletion and command history with up arrow(only current session at the moment).
+AdminShell(ash) is shell-like enviroment with various tools for aspiring Linux sysadmins. Ash supports tab autocompletion and command history with up arrow(only current session at the moment).
 
 ###Depencies
 
