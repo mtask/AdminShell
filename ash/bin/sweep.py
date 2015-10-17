@@ -4,7 +4,7 @@ import subprocess, threading, time, sys, netifaces, os
 
 '''
 author: mtask@github.com
-Quick ping sweep
+Fast ping sweep
 '''
 
 class sweeper(object):
@@ -39,11 +39,11 @@ class sweeper(object):
         self.threads = []
         self.tsleep = 30
         print self.header+"Sweeping network"+self.neutral
-        for i in range(1, 255):
+        for i in range(1, 256):
             self.t = threading.Thread(target=self.ping_, args=(str(self.ip_) + str(i),))
             self.threads.append(self.t)
             self.t.start()
-            print ".",
+            print ">",
             if i == self.tsleep:
                 for j in self.threads:
                     j.join()

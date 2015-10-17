@@ -11,7 +11,7 @@ class aShell(cmd.Cmd):
 
     def __init__(self):
         cmd.Cmd.__init__(self)
-        self.prompt = "as> "
+        self.prompt = "ash> "
 
     def do_netmon(self, time_ival):
         """
@@ -77,7 +77,7 @@ class aShell(cmd.Cmd):
             
     def do_sweep(self,args):
         '''
-        Quick ping sweep
+        Fast ping sweep
         '''
         self.s = sweeper() 
         if len(args.split()) == 0:
