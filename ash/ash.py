@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import os, threading, sys, cmd, getpass
+import os, threading, sys, cmd, getpass, dircache
 from bin import *
 
 """
@@ -7,7 +7,7 @@ Author: mtask@github.com
 See LICENSE.md
 """
 
-class aShell(cmd.Cmd):
+class AshCmd(cmd.Cmd):
 
     def __init__(self):
         cmd.Cmd.__init__(self)
@@ -215,10 +215,51 @@ class aShell(cmd.Cmd):
         Exit ash shell
         '''
         sys.exit(0)
+        
+    ##############################
+    #shell's functionalities #
+    ##############################
+    
+    def completedefault(self,text, line, begidx, endidx):
+        """ auto complete of file name
+            Note:Needs fixing if path start from root
+        """
+        line = line.split()
+        if len(line) < 2:
+            filename = ''
+            path = './'
+        else:
+            path = line[1]
+            if '/' in path:
+                i = path.rfind('/')
+                filename = path[i+1:]
+                path = path[:i]
+            else:
+                filename = path
+                path = './'
+        ls = dircache.listdir(path)
+        ls = ls[:] # for overwrite in annotate.
+        dircache.annotate(path, ls)
+        if filename == '':
+            return ls
+        else:
+            return [f for f in ls if f.startswith(filename)]
+		         	
+    def emptyline(self):
+        """
+        Called when an empty line is entered in response to the prompt.
+        If this method is not overridden, it repeats the last nonempty
+        command entered.
+
+        """
+        if self.lastcmd:
+            self.lastcmd = ""
+            return self.onecmd('\n')
 
     def do_EOF(self,*args):
+        ''' Clean exit if ctrl+d pressed'''
         print
-        sys.exit()
+        sys.exit(0)
 
     def cmdloop(self):
         try:
@@ -226,12 +267,12 @@ class aShell(cmd.Cmd):
         except KeyboardInterrupt:
             print
             self.cmdloop()
-        except TypeError as e:
+        except TypeError:
             print "*** Invalid syntax"
             self.cmdloop()
-        except IndexError as e:
+        except IndexError:
             print "*** Check arguments"
             self.cmdloop()
 
 if __name__=="__main__":
-    aShell().cmdloop()
+    AshCmd().cmdloop()
