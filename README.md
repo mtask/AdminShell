@@ -16,22 +16,31 @@ Packet analyzing tool made with scapy
 
 Arguments:
 
+
 -i IFACE, --iface IFACE    Capturing interface
+
 
 optional arguments:
   
+
 -h, --help     show this help message and exit
     
+
 -n NUM, --num NUM    Number of packets to capture
   
+
 -r READ, --read READ  Read .pcap file
   
+
 -f FILTER, --filter FILTER  Filter packets. Use quotes("")
+
 
 -w WRITE, --write WRITE  Write capture to file
  
+
 -I, --inspect  Inspect packets
  
+
 -v, --verbose   verbose output
 
 ###multissh
