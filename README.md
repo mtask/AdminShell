@@ -14,25 +14,25 @@ $ pip install IPy fabric netifaces scapy
 
 Packet analyzing tool made with scapy
 
-arguments:
+Arguments:
 
-  -i IFACE, --iface IFACE    Capturing interface
+-i IFACE, --iface IFACE    Capturing interface
 
 optional arguments:
   
-  -h, --help            show this help message and exit
+-h, --help     show this help message and exit
     
-  -n NUM, --num NUM     Number of packets to capture
+-n NUM, --num NUM    Number of packets to capture
   
-  -r READ, --read READ  Read .pcap file
+-r READ, --read READ  Read .pcap file
   
-  -f FILTER, --filter FILTER      Filter packets. Use quotes("")
+-f FILTER, --filter FILTER  Filter packets. Use quotes("")
 
-  -w WRITE, --write WRITE         Write capture to file
+-w WRITE, --write WRITE  Write capture to file
  
-  -I, --inspect         Inspect packets
+-I, --inspect  Inspect packets
  
-  -v, --verbose         verbose output
+-v, --verbose   verbose output
 
 ###multissh
 
