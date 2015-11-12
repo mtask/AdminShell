@@ -30,7 +30,7 @@ class AshCmd(cmd.Cmd):
             print "[!] Monitoring internet connection in Background"
         else:
             print "[!] Monitoring Failed to start!"
-            
+
     def do_pydump(self, args):
         """Network analyzer"""
         self.pd = Pydump()
@@ -69,28 +69,28 @@ class AshCmd(cmd.Cmd):
             self.h.write("\nMAC-addresses found("+str(len(self.macs))+"):")
             for mac in self.macs:
                 self.h.write(mac)
-                
+
     def do_ipconf(self, iface):
         '''
         Prints network interfaces info in simple and clean form
         Printed info includes Interface, ip-address and mac-address
         '''
-        self.ipc = ipconf() 
+        self.ipc = ipconf()
         self.i_args = iface.split()
         if len(self.i_args) == 0:
             self.ipc.get_ifaceinfo()
-            
+
     def do_sweep(self,args):
         '''
         Fast ping sweep
         '''
-        self.s = sweeper() 
+        self.s = sweeper()
         if len(args.split()) == 0:
             self.s.sweep()
         else:
             print "*** sweep doesn't take any arguments"
-             
-    
+
+
     def do_lookup(self, target):
         """
         lookup [host]
@@ -215,11 +215,11 @@ class AshCmd(cmd.Cmd):
         Exit ash shell
         '''
         sys.exit(0)
-        
-    ##############################
+
+    ##########################
     #shell's functionalities #
-    ##############################
-    
+    ##########################
+
     def completedefault(self,text, line, begidx, endidx):
         """ auto complete of file name
             Note:Needs fixing if path start from root
@@ -244,7 +244,7 @@ class AshCmd(cmd.Cmd):
             return ls
         else:
             return [f for f in ls if f.startswith(filename)]
-		         	
+
     def emptyline(self):
         """
         Called when an empty line is entered in response to the prompt.
@@ -267,8 +267,8 @@ class AshCmd(cmd.Cmd):
         except KeyboardInterrupt:
             print
             self.cmdloop()
-        except TypeError:
-            print "*** Invalid syntax"
+        except TypeError as e:
+            print e
             self.cmdloop()
         except IndexError:
             print "*** Check arguments"
