@@ -2,17 +2,37 @@ AdminShell(ash) is shell-like enviroment with various tools for aspiring Linux s
 
 ###Depencies
 
-$ pip install IPy
-
-$ pip install fabric
-
-$ pip install netifaces
+$ pip install IPy fabric netifaces scapy
 
 ## Start ash session
 
 &gt; python ash.py
 
 ##Available commands
+
+###pydump
+
+Packet analyzing tool made with scapy
+
+arguments:
+
+  -i IFACE, --iface IFACE    Capturing interface
+
+optional arguments:
+  
+  -h, --help            show this help message and exit
+    
+  -n NUM, --num NUM     Number of packets to capture
+  
+  -r READ, --read READ  Read .pcap file
+  
+  -f FILTER, --filter FILTER      Filter packets. Use quotes("")
+
+  -w WRITE, --write WRITE         Write capture to file
+ 
+  -I, --inspect         Inspect packets
+ 
+  -v, --verbose         verbose output
 
 ###multissh
 

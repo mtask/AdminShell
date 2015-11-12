@@ -30,6 +30,11 @@ class aShell(cmd.Cmd):
             print "[!] Monitoring internet connection in Background"
         else:
             print "[!] Monitoring Failed to start!"
+            
+    def do_pydump(self, args):
+        """Network analyzer"""
+        self.pd = Pydump()
+        self.pd.main(args.split())
 
     def do_harvest(self, args):
         """

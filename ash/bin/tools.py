@@ -135,16 +135,16 @@ class lookup(object):
                 return self.res[0]         
             except socket.gaierror:
                 return "Couldn't find any results for: " +str(self.t)
-            except socket.error:
-                return "Are you root/admin?"
+            except Exception as e:
+                print e
         else:
             try:
                 self.res = socket.gethostbyname(self.t)
                 return self.res
             except socket.gaierror:
                 return "Couldn't find any results for: " +str(self.t)
-            except socket.error:
-                return "Are you root/admin?"
+            except Exception as e:
+                print e
         
 class file_sharing(object):
      
