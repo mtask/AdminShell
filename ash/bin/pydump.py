@@ -23,7 +23,6 @@ class Pydump(object):
         self.grn = '\033[92m' # Green
         self.fatal = '\033[91m' #red
         self.packetNumber = 0
-        self.packetNumber = 0
 
     def arguments(self,custom_arg=None):
 
@@ -34,7 +33,7 @@ class Pydump(object):
         self.parser.add_argument("-f", "--filter", help="Filter packets. Use quotes(\"\")")
         self.parser.add_argument("-w", "--write", help="Write capture to file")
         self.parser.add_argument("-I", "--inspect", action='store_true', help="Inspect packets")
-        self.parser.add_argument("-v", "--verbose", action='store_true', help="verbose output")
+        
         try:
             if custom_arg:
                 self.args = self.parser.parse_args(custom_arg)
@@ -46,31 +45,20 @@ class Pydump(object):
             else:
                 return self.args
         except SystemExit:
-            return
-
-
-    def get_input(self, prompt):
-        #################################################### #
-        #Get user input maintaining the python compatibility #
-        #with earlier and newer versions.                    #
-        ######################################################
-
-        if sys.hexversion > 0x03000000:
-            return input(prompt)
-        else:
-            return raw_input(prompt)
-
-    def verbose_output(self, packet):
-        self.packetNumber += 1
-        time.sleep(1)
-        return "Packet #"+ str(self.packetNumber) + ": " + packet[0][1].src + "==>" + packet[0][1].dst
-
+            if custom_arg:
+                return
+            else:
+                sys.exit(1)
+            
     def output(self, packet):
+        """
+        Standard sniffing output
+        """
         self.packetNumber += 1
         time.sleep(1)
-        return str(self.packetNumber) + ": " + packet[0][1].src + "==>" + packet[0][1].dst
+        return str(self.packetNumber) + ": " + packet.summary()
 
-    def sniffer(self,iface, filter_=None, num=None, verbose=None):
+    def sniffer(self,iface, filter_=None, num=None):
         ######################################
         #Sniffing with scapy.                #
         #sniffer() returns captured packets, #
@@ -80,16 +68,8 @@ class Pydump(object):
         self.fil = filter_
         self.iface = iface
         self.num = num
-        self.ver = verbose
         self.pckts = None
-
-        ###Setting verbosity level###
-
-        if self.ver:
-            self.statement = self.verbose_output
-            #Note to myself:Make custom src. dst. etc etc
-        else:
-            self.statement = self.output
+        self.statement = self.output
 
 
         ###Check if --num/--filter used and start capturing###
@@ -130,24 +110,6 @@ class Pydump(object):
         else:
             return False
 
-    def inspect_options(self, option, cap=None):
-        #########################
-        #Options in inspect mode#
-        #########################
-
-        self.opt = option
-        self.options = {'list': 'List options','view': 'View list of captured packages','exit': 'Exit'}
-
-        if self.opt.lower() == 'view' and cap:
-            self.print_packets(cap)
-        elif self.opt.lower() == 'list':
-            print("---Options---")
-            for self.opt in self.options:
-                print(self.opt + ": " + self.options[self.opt])
-            self.get_input("Press enter to continue")
-        elif self.opt.lower() == "exit":
-            return
-
     def main(self, customArgs=None):
         ###Checking arguments###
         if customArgs:
@@ -167,11 +129,7 @@ class Pydump(object):
             self.num_ = self.arg.num
         else:
             self.num_ = None
-        if self.arg.verbose:
-            self.ver = self.arg.verbose
-        else:
-            self.ver = None
-
+        
         ###If --read###
         if self.arg.read:
             self.pcapfile = self.arg.read
@@ -179,12 +137,13 @@ class Pydump(object):
                 self.rdpkt=rdpcap(self.pcapfile)
                 self.rdpkt.nsummary()
             except Exception as e:
-                sys.stderr.write(self.fatal+e+self.blk)
-                sys.exit(2)
+                sys.stderr.write(self.fatal+str(e)+self.blk)
+                print("")
+                return
 
         ###Start packet sniffing###
 
-        self.cap = self.sniffer(self.iface_, filter_=self.fil_, num=self.num_,verbose=self.ver)
+        self.cap = self.sniffer(self.iface_, filter_=self.fil_, num=self.num_)
 
         ###Write captured packets to file if --write###
         if self.cap:
@@ -272,6 +231,8 @@ class Inspect(object):
                         if self.choice.lower() == 'list':
                             self.parser(self.choice, cap=self.cap)
                             continue
+                        elif self.choice.lower() == 'exit':
+                            return
                         else:
                             self.parser(self.choice)
                             continue
@@ -299,7 +260,7 @@ class Inspect(object):
         #########################
 
         self.opt = option
-        self.options = {'help': 'List options','list': 'View list of captured packages','exit': 'Exit'}
+        self.options = {'help': 'List options','list': 'View list of captured packages'}
 
         if self.opt.lower() == 'list' and cap:
             self.print_packets(cap)
@@ -308,8 +269,6 @@ class Inspect(object):
             for self.opt in self.options:
                 print(self.opt + ": " + self.options[self.opt])
             self.get_input("Press enter to continue")
-        elif self.opt.lower() == "exit":
-            return
 
 if __name__ == "__main__":
     pd = Pydump()
