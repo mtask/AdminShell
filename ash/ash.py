@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2.7
 import os, threading, sys, cmd, getpass, dircache
 from bin import *
 
