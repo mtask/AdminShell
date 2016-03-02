@@ -1,25 +1,24 @@
 AdminShell(ash) is shell-like enviroment with various tools for aspiring Linux sysadmins. Ash supports tab autocompletion and command history with up arrow(only current session at the moment).
 
-##
-- Installation
+##Installation
 
 $ git clone https://github.com/mtask/AdminShell.git
 
 $ cd AdminShell
   
-   - Bash users
-      
-      $ echo export PATH=\"\$PATH:$(pwd)/ash\"
+- Bash users
    
-      $ source .bashrc
+$ echo export PATH=\"\$PATH:$(pwd)/ash\"
+   
+$ source .bashrc
 
 - Depencies
 
 $ pip install IPy fabric netifaces scapy
 
-## Start ash session
+-  Start ash session
 
-&gt; python ash.py
+   &gt;ash.py
 
 ##Available commands
 
